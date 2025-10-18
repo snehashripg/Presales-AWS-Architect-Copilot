@@ -1,0 +1,44 @@
+{
+  "deployment_timestamp": "2025-10-16T16:50:46.734661",
+  "region": "us-east-1",
+  "account_id": "040504913362",
+  "s3_bucket": "presales-rfp-outputs",
+  "layer_arn": "arn:aws:lambda:us-east-1:040504913362:layer:rfx-agents-layer:44",
+  "functions": [
+    {
+      "name": "rfx-agentcore-orchestrator",
+      "arn": "arn:aws:lambda:us-east-1:040504913362:function:rfx-agentcore-orchestrator",
+      "agent_type": "orchestrator",
+      "handler": "agentcore_wrapper.lambda_handler",
+      "description": "Main orchestrator that runs the complete RFx processing pipeline"
+    },
+    {
+      "name": "rfx-agentcore-parsing",
+      "arn": "arn:aws:lambda:us-east-1:040504913362:function:rfx-agentcore-parsing",
+      "agent_type": "parsing",
+      "handler": "agentcore_wrapper.lambda_handler",
+      "description": "Parses and extracts structured data from RFx documents"
+    },
+    {
+      "name": "rfx-agentcore-clarification",
+      "arn": "arn:aws:lambda:us-east-1:040504913362:function:rfx-agentcore-clarification",
+      "agent_type": "clarification",
+      "handler": "agentcore_wrapper.lambda_handler",
+      "description": "Generates clarification questions for ambiguous requirements"
+    },
+    {
+      "name": "rfx-agentcore-pricing",
+      "arn": "arn:aws:lambda:us-east-1:040504913362:function:rfx-agentcore-pricing",
+      "agent_type": "pricing",
+      "handler": "agentcore_wrapper.lambda_handler",
+      "description": "Estimates pricing and funding requirements"
+    },
+    {
+      "name": "rfx-agentcore-sow",
+      "arn": "arn:aws:lambda:us-east-1:040504913362:function:rfx-agentcore-sow",
+      "agent_type": "sow",
+      "handler": "agentcore_wrapper.lambda_handler",
+      "description": "Drafts comprehensive Statement of Work document"
+    }
+  ]
+}
