@@ -1,0 +1,88 @@
+# ========================
+# Python
+# ========================
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.db
+*.sqlite3
+# Virtual environments
+venv/
+ENV/
+env/
+.venv/
+.ENV/
+# Jupyter Notebooks
+.ipynb_checkpoints/
+# ========================
+# Environment / Credentials
+# ========================
+.env
+.env.*
+!env.example
+*.pem
+*.key
+*.crt
+.aws/
+.credentials/
+# ========================
+# AWS SAM / Lambda / SageMaker
+# ========================
+.aws-sam/
+.lambda-build/
+lambda.zip
+*.sam.template
+template.yaml~
+template.yml~
+tmp/
+temp/
+output/
+build/
+dist/
+artifacts/
+# ========================
+# Docker
+# ========================
+Dockerfile~
+.dockerignore
+*.tar
+*.img
+*.pid
+*.bak
+# Ignore Docker build output
+docker-compose.override.yml
+**/docker-cache/
+**/docker-tmp/
+# ========================
+# Logs / Coverage / Tests
+# ========================
+*.log
+coverage.xml
+*.cover
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+test-output/
+# ========================
+# Editors / OS
+# ========================
+.vscode/
+.idea/
+*.swp
+.DS_Store
+Thumbs.db
+# ========================
+# Frontend / Web assets (if any)
+# ========================
+node_modules/
+build/
+dist/
+
+#Bedrock sensitive credentials
+.bedrock_agentcore.yaml
+ backend/lambda_package.zip
