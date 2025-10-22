@@ -85,3 +85,4 @@ dist/
 
 #Bedrock sensitive credentials
 .bedrock_agentcore.yaml
+ backend/lambda_package.zip
