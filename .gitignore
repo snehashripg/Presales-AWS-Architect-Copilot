@@ -82,3 +82,6 @@ Thumbs.db
 node_modules/
 build/
 dist/
+
+#Bedrock sensitive credentials
+.bedrock_agentcore.yaml
