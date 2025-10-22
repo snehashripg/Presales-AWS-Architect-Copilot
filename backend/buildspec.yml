@@ -1,0 +1,41 @@
+buildspec_content = """version: 0.2
+
+phases:
+  pre_build:
+    commands:
+      - echo "Logging in to Amazon ECR..."
+      - aws --version
+      - echo "Repository URI will be 040504913362.dkr.ecr.us-east-1.amazonaws.com/bedrock-agentcore-solution_architect_copilot_agentcore"
+      - REPOSITORY_URI=040504913362.dkr.ecr.us-east-1.amazonaws.com/bedrock-agentcore-solution_architect_copilot_agentcore
+      - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin $REPOSITORY_URI
+      - COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
+      - IMAGE_TAG=${COMMIT_HASH:=latest}
+      - echo "Building image with tag $IMAGE_TAG"
+      
+  build:
+    commands:
+      - echo "Build started on $(date)"
+      - echo "Building Docker image for ARM64 architecture..."
+      - docker build --platform linux/arm64 -t $REPOSITORY_URI:latest .
+      - docker tag $REPOSITORY_URI:latest $REPOSITORY_URI:$IMAGE_TAG
+      
+  post_build:
+    commands:
+      - echo "Build completed on $(date)"
+      - echo "Pushing Docker images to ECR..."
+      - docker push $REPOSITORY_URI:latest
+      - docker push $REPOSITORY_URI:$IMAGE_TAG
+      - echo "Writing image definitions file..."
+      - printf '[{"name":"agentcore","imageUri":"%s"}]' $REPOSITORY_URI:$IMAGE_TAG > imagedefinitions.json
+      - echo "Image successfully pushed to $REPOSITORY_URI:$IMAGE_TAG"
+
+artifacts:
+  files:
+    - imagedefinitions.json
+"""
+
+# Write buildspec.yml to your project directory
+with open('buildspec.yml', 'w') as f:
+    f.write(buildspec_content)
+
+print("✅ buildspec.yml created!")

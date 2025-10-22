@@ -1,0 +1,143 @@
+Metadata-Version: 2.1
+Name: awslabs
+Version: 0.1.1
+Summary: This cli contains aws labs to try.
+Home-page: https://github.com/binxio/awslabs
+Author: Martijn van Dongen
+Author-email: martijnvandongen@binx.io
+License: UNKNOWN
+Platform: any
+Requires-Dist: boto3
+Requires-Dist: requests
+Requires-Dist: configparser
+Requires-Dist: click
+Requires-Dist: cfn-flip
+Requires-Dist: pylint
+
+# awslabs
+[awslabs](https://gitlab.com/binxio/awslabs) is a program that challenges your AWS knowledge.
+
+## Installing
+
+The simplest method is to install awslabs with `pip3`:
+
+    pip3 install .
+
+## Development installation
+To start for development type the following:
+
+```bash
+make init
+make develop
+```
+
+## Run awslabs for development
+Type the following:
+
+```bash
+pipenv run python -m awslabs list 
+```
+
+To run a track you are working on type:
+
+```bash
+pipenv run python -m awslabs <your-track> start
+```
+
+## Package awslabs
+To package awslabs type:
+
+```bash
+make dist 
+```
+
+## TODO
+
+Refine the following ideas.
+
+Errors:
+* Ensure it can only be used in python3
+
+Refactor/fix:
+* The deep if/else/try-statements makes it a horror
+* Remove the meta files/folders (__init__.py / __pycachec__ etc)
+* Consider replacing mytrack.py to yaml
+* Make region independent
+* Make the cloudformation input json compatible, and optionally a different file with a parameter in click
+* Make it easy to save progress details in
+
+Features:
+* Add tests (cloudformation already has the "perfect" cloudformation scripts)
+* Users can first read the track (awslabs trackname / awslabs trackname info)
+* Group tracks in "basic" and "advanced" (to be able to do the advanced, you need to have basic knowledge)
+* Write start time to config for report in the feedback the progress
+* Make awslabs track stop (or abort) such that it will warn if resources are still running
+* Add a short description to the tracks to improve track selection
+
+```
+$ awslabs
+
+Tracks available:
+
+  Basic:
+    ec2             Deploy ec2 instance with init
+    autoscaling     Deploy an autoscaling group
+    s3              Use the S3 service
+    ml-api          Use the machine learning api's
+
+  Advanced:
+    kinesis-athena  Kinesis, Firehose, S3, Athena
+    ecs             ECS Cluster with Service Discovery
+    wordpress       Learn ELB, Autoscaling, RDS, Route53
+```
+
+## Create a simple challenge
+To create a challenge, do the following:
+
+- Create a directory in tracks called eg. `mytrack`,
+- create a `mytrack.py` file in `mytrack`
+- create a directory `challenges` in `mytrack`
+- create multiple challenge files starting from `01.py` and so on.
+
+## Tracks
+Tracks are called `mytrack.py` and must contain at a minimum the following:
+
+```python
+from awslabs.track import Track
+
+class MyTrack(Track):
+    """
+    A track description, can be multiline and contain links etc.
+    """
+    name = "TrackName"
+    description = __doc__
+    level = "basic"
+    short_description = "a short description"
+```
+
+## Challenges
+Challenges are named `01.py` and so on, and must contain at a minimum the following:
+
+```python
+from awslabs.challenge import Challenge
+
+class MyChallenge(Challenge):
+    """
+        Put your challenge
+    """
+    title = "My Challenge"
+    description = __doc__
+
+    def start(self) -> None:
+        self.instructions()
+
+    def validate(self) -> None:
+        self.save('key', 'a-value-to-save') # save a value to the session
+        self.get('key') # load a value from the session
+        self.check() # check the challenge
+        self.success('') # mark the challenge as succesful 
+        self.fail('') # mark the challenge as failure
+```
+
+
+
